@@ -15,7 +15,7 @@
 	},
 	"funding": "https://github.com/ryoppippi/ccusage?sponsor=1",
 	"bin": {
-		"ccusage": "./src/cli.ts"
+		"ccusage": "./src/main.ts"
 	},
 	"files": [
 		"config-schema.json",
@@ -24,39 +24,31 @@
 	"type": "module",
 	"publishConfig": {
 		"bin": {
-			"ccusage": "./dist/cli.js"
+			"ccusage": "./dist/main.js"
 		}
 	},
 	"scripts": {
 		"bench": "node scripts/bench.mjs",
-		"build": "pnpm run generate:schema && tsdown && pnpm run ensure:native-binary",
-		"build:rust": "cargo build --manifest-path ../../rust/Cargo.toml --release --bin ccusage",
-		"ensure:native-binary": "bun scripts/ensure-native-binary.ts",
-		"generate:schema": "cargo run --quiet --manifest-path ../../rust/Cargo.toml --bin generate-config-schema -- config-schema.json && oxfmt --write config-schema.json && cp config-schema.json ../../docs/public/config-schema.json",
-		"prepack": "pnpm run build && clean-pkg-json",
-		"start": "cargo run --manifest-path ../../rust/Cargo.toml --bin ccusage --",
-		"test:statusline": "cat test/statusline-test.json | cargo run --manifest-path ../../rust/Cargo.toml --bin ccusage -- statusline",
-		"test:statusline:all": "echo 'Testing Sonnet 4:' && pnpm run test:statusline:sonnet4 && echo 'Testing Opus 4.1:' && pnpm run test:statusline:opus4 && echo 'Testing Sonnet 4.1:' && pnpm run test:statusline:sonnet41",
-		"test:statusline:opus4": "cat test/statusline-test-opus4.json | cargo run --manifest-path ../../rust/Cargo.toml --bin ccusage -- statusline --offline",
-		"test:statusline:sonnet4": "cat test/statusline-test-sonnet4.json | cargo run --manifest-path ../../rust/Cargo.toml --bin ccusage -- statusline --offline",
-		"test:statusline:sonnet41": "cat test/statusline-test-sonnet41.json | cargo run --manifest-path ../../rust/Cargo.toml --bin ccusage -- statusline --offline"
+		"build": "tsdown",
+		"embed:pricing": "bun scripts/embed-pricing.ts",
+		"start": "bun src/main.ts",
+		"prepack": "bun run build && clean-pkg-json",
+		"test:statusline": "cat test/statusline-test.json | bun src/main.ts statusline",
+		"test:statusline:all": "echo 'Testing Sonnet 4:' && bun run test:statusline:sonnet4 && echo 'Testing Opus 4.1:' && bun run test:statusline:opus4 && echo 'Testing Sonnet 4.1:' && bun run test:statusline:sonnet41",
+		"test:statusline:opus4": "cat test/statusline-test-opus4.json | bun src/main.ts statusline --offline",
+		"test:statusline:sonnet4": "cat test/statusline-test-sonnet4.json | bun src/main.ts statusline --offline",
+		"test:statusline:sonnet41": "cat test/statusline-test-sonnet41.json | bun src/main.ts statusline --offline"
 	},
 	"devDependencies": {
-		"@types/bun": "catalog:types",
-		"clean-pkg-json": "catalog:release",
-		"fs-fixture": "catalog:testing",
-		"gunshi": "catalog:runtime",
-		"mitata": "catalog:testing",
-		"publint": "catalog:lint",
-		"tsdown": "catalog:build",
-		"vitest": "catalog:testing"
-	},
-	"optionalDependencies": {
-		"@ccusage/ccusage-darwin-arm64": "workspace:*",
-		"@ccusage/ccusage-darwin-x64": "workspace:*",
-		"@ccusage/ccusage-linux-arm64": "workspace:*",
-		"@ccusage/ccusage-linux-x64": "workspace:*",
-		"@ccusage/ccusage-win32-arm64": "workspace:*",
-		"@ccusage/ccusage-win32-x64": "workspace:*"
+		"@types/bun": "^1.3.5",
+		"@types/node": "^24.10.1",
+		"clean-pkg-json": "^1.3.0",
+		"fs-fixture": "^2.8.1",
+		"gunshi": "^0.31.0",
+		"mitata": "^1.0.34",
+		"publint": "^0.3.12",
+		"tsdown": "^0.22.0",
+		"typescript": "^5.9.2",
+		"vitest": "^4.1.2"
 	}
 }

@@ -1,9 +1,0 @@
-use crate::{cli::SharedArgs, LoadedEntry, Result};
-
-use super::parser;
-
-pub(crate) fn load_entries(shared: &SharedArgs) -> Result<Vec<LoadedEntry>> {
-    crate::progress::track_usage_load(crate::progress::UsageLoadAgent::Qwen, shared.json, || {
-        parser::load_entries(shared)
-    })
-}

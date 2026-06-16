@@ -5,23 +5,22 @@
 default:
     @just --list
 
-# Build the site (delegated; wrangler.jsonc runs `pnpm run build`, which also
-# copies the generated schema into public/ before VitePress)
+# Build the site
 build:
-    pnpm run build
+    bun run build
 
-# Start the dev server (the pnpm script copies the schema into public/ first)
+# Start the dev server
 dev:
-    pnpm run dev
+    bun run dev
 
-# Type-check the site (tsgo comes from the Nix dev shell, so call it directly)
+# Type-check the site
 typecheck:
-    tsgo --noEmit
+    bun run tsc --noEmit
 
 # Preview the production build locally
 preview:
-    pnpm exec vitepress preview
+    bun run vitepress preview
 
 # Deploy to Cloudflare
 deploy:
-    pnpm exec wrangler deploy
+    bun run wrangler deploy

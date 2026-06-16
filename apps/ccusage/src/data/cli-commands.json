@@ -1,0 +1,297 @@
+{
+	"combinedOptions": {
+		"blocks_combined_options": [
+			"shared_claude_options",
+			"blocks_options"
+		],
+		"claude_daily_options": [
+			"shared_claude_options",
+			"daily_options"
+		],
+		"claude_session_options": [
+			"shared_claude_options",
+			"session_options"
+		],
+		"claude_weekly_options": [
+			"shared_claude_options",
+			"weekly_options"
+		]
+	},
+	"root": {
+		"usage": [
+			"ccusage [daily] <OPTIONS>",
+			"ccusage <COMMANDS>"
+		],
+		"commands": [
+			{
+				"name": "daily",
+				"description": "Show all detected coding (agent) CLI usage grouped by date"
+			},
+			{
+				"name": "monthly",
+				"description": "Show all detected coding (agent) CLI usage grouped by month"
+			},
+			{
+				"name": "weekly",
+				"description": "Show all detected coding (agent) CLI usage grouped by week"
+			},
+			{
+				"name": "session",
+				"description": "Show all detected coding (agent) CLI usage grouped by session"
+			},
+			{
+				"name": "blocks",
+				"description": "Show usage report grouped by session billing blocks"
+			},
+			{
+				"name": "statusline",
+				"description": "Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)"
+			},
+			{
+				"name": "claude",
+				"description": "Show Claude Code usage commands"
+			},
+			{
+				"name": "codex",
+				"description": "Show Codex token usage commands"
+			},
+			{
+				"name": "gemini",
+				"description": "Show Gemini CLI usage commands"
+			}
+		]
+	},
+	"pages": [
+		{
+			"path": [
+				"daily"
+			],
+			"description": "Show all detected coding (agent) CLI usage grouped by date",
+			"usage": "ccusage daily <OPTIONS>",
+			"options": "claude_daily_options"
+		},
+		{
+			"path": [
+				"monthly"
+			],
+			"description": "Show all detected coding (agent) CLI usage grouped by month",
+			"usage": "ccusage monthly <OPTIONS>",
+			"options": "shared_claude_options"
+		},
+		{
+			"path": [
+				"weekly"
+			],
+			"description": "Show all detected coding (agent) CLI usage grouped by week",
+			"usage": "ccusage weekly <OPTIONS>",
+			"options": "claude_weekly_options"
+		},
+		{
+			"path": [
+				"session"
+			],
+			"description": "Show all detected coding (agent) CLI usage grouped by session",
+			"usage": "ccusage session <OPTIONS>",
+			"options": "claude_session_options"
+		},
+		{
+			"path": [
+				"blocks"
+			],
+			"description": "Show usage report grouped by session billing blocks",
+			"usage": "ccusage blocks <OPTIONS>",
+			"options": "blocks_combined_options"
+		},
+		{
+			"path": [
+				"statusline"
+			],
+			"description": "Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)",
+			"usage": "ccusage statusline <OPTIONS>",
+			"options": "statusline_options"
+		},
+		{
+			"path": [
+				"claude"
+			],
+			"description": "Usage reports for claude.",
+			"usage": "ccusage claude <COMMANDS>",
+			"commands": [
+				{
+					"name": "daily",
+					"description": "Show usage report grouped by date"
+				},
+				{
+					"name": "monthly",
+					"description": "Show usage report grouped by month"
+				},
+				{
+					"name": "weekly",
+					"description": "Show usage report grouped by week"
+				},
+				{
+					"name": "session",
+					"description": "Show usage report grouped by conversation session"
+				},
+				{
+					"name": "blocks",
+					"description": "Show usage report grouped by session billing blocks"
+				},
+				{
+					"name": "statusline",
+					"description": "Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)"
+				}
+			]
+		},
+		{
+			"path": [
+				"claude",
+				"daily"
+			],
+			"description": "Show usage report grouped by date",
+			"usage": "ccusage claude daily <OPTIONS>",
+			"options": "claude_daily_options"
+		},
+		{
+			"path": [
+				"claude",
+				"monthly"
+			],
+			"description": "Show usage report grouped by month",
+			"usage": "ccusage claude monthly <OPTIONS>",
+			"options": "shared_claude_options"
+		},
+		{
+			"path": [
+				"claude",
+				"weekly"
+			],
+			"description": "Show usage report grouped by week",
+			"usage": "ccusage claude weekly <OPTIONS>",
+			"options": "claude_weekly_options"
+		},
+		{
+			"path": [
+				"claude",
+				"session"
+			],
+			"description": "Show usage report grouped by conversation session",
+			"usage": "ccusage claude session <OPTIONS>",
+			"options": "claude_session_options"
+		},
+		{
+			"path": [
+				"claude",
+				"blocks"
+			],
+			"description": "Show usage report grouped by session billing blocks",
+			"usage": "ccusage claude blocks <OPTIONS>",
+			"options": "blocks_combined_options"
+		},
+		{
+			"path": [
+				"claude",
+				"statusline"
+			],
+			"description": "Display compact status line for Claude Code hooks with hybrid time+file caching (Beta)",
+			"usage": "ccusage claude statusline <OPTIONS>",
+			"options": "statusline_options"
+		},
+		{
+			"path": [
+				"codex"
+			],
+			"description": "Usage reports for codex.",
+			"usage": "ccusage codex <COMMANDS>",
+			"commands": [
+				{
+					"name": "daily",
+					"description": "Show Codex token usage grouped by day"
+				},
+				{
+					"name": "monthly",
+					"description": "Show Codex token usage grouped by month"
+				},
+				{
+					"name": "session",
+					"description": "Show Codex token usage grouped by session"
+				}
+			]
+		},
+		{
+			"path": [
+				"codex",
+				"daily"
+			],
+			"description": "Show Codex token usage grouped by day",
+			"usage": "ccusage codex daily <OPTIONS>",
+			"options": "codex_options"
+		},
+		{
+			"path": [
+				"codex",
+				"monthly"
+			],
+			"description": "Show Codex token usage grouped by month",
+			"usage": "ccusage codex monthly <OPTIONS>",
+			"options": "codex_options"
+		},
+		{
+			"path": [
+				"codex",
+				"session"
+			],
+			"description": "Show Codex token usage grouped by session",
+			"usage": "ccusage codex session <OPTIONS>",
+			"options": "codex_options"
+		},
+		{
+			"path": [
+				"gemini"
+			],
+			"description": "Usage reports for gemini.",
+			"usage": "ccusage gemini <COMMANDS>",
+			"commands": [
+				{
+					"name": "daily",
+					"description": "Show Gemini CLI usage grouped by date"
+				},
+				{
+					"name": "monthly",
+					"description": "Show Gemini CLI usage grouped by month"
+				},
+				{
+					"name": "session",
+					"description": "Show Gemini CLI usage grouped by session"
+				}
+			]
+		},
+		{
+			"path": [
+				"gemini",
+				"daily"
+			],
+			"description": "Show Gemini CLI usage grouped by date",
+			"usage": "ccusage gemini daily <OPTIONS>",
+			"options": "agent_options"
+		},
+		{
+			"path": [
+				"gemini",
+				"monthly"
+			],
+			"description": "Show Gemini CLI usage grouped by month",
+			"usage": "ccusage gemini monthly <OPTIONS>",
+			"options": "agent_options"
+		},
+		{
+			"path": [
+				"gemini",
+				"session"
+			],
+			"description": "Show Gemini CLI usage grouped by session",
+			"usage": "ccusage gemini session <OPTIONS>",
+			"options": "agent_options"
+		}
+	]
+}

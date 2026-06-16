@@ -4,33 +4,19 @@
 	"private": true,
 	"workspaces": [
 		"apps/*",
-		"docs",
-		"packages/*"
+		"docs"
 	],
 	"type": "module",
-	"scripts": {
-		"preinstall": "npx only-allow pnpm"
-	},
+	"scripts": {},
 	"dependencies": {},
 	"devDependencies": {
-		"bumpp": "catalog:release",
-		"changelogithub": "catalog:release",
-		"pkg-pr-new": "catalog:release",
-		"vitest": "catalog:testing"
+		"bumpp": "^11.1.0",
+		"changelogithub": "^14.0.0",
+		"pkg-pr-new": "^0.0.75",
+		"vitest": "^4.1.2"
 	},
 	"engines": {
-		"runtime": [
-			{
-				"name": "node",
-				"version": "^24.15.0",
-				"onFail": "download"
-			},
-			{
-				"name": "bun",
-				"version": "^1.3.13",
-				"onFail": "download"
-			}
-		]
+		"bun": "^1.3.13"
 	},
-	"packageManager": "pnpm@11.1.1"
+	"packageManager": "bun@1.3.13"
 }

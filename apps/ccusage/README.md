@@ -23,29 +23,32 @@
 
 > Analyze coding (agent) CLI token usage and costs from local data.
 
+## Why this fork?
+
+The upstream [ccusage](https://github.com/ryoppippi/ccusage) project moved its core to a
+compiled Rust binary shipped as a native executable. In practice that binary has **low trust
+on many machines** — it gets flagged and quarantined by antivirus/endpoint-protection tools
+left and right, and is outright blocked on locked-down or corporate systems.
+
+This is a **Bun-only TypeScript rewrite** with a single, deliberately narrow purpose: give you
+your usage and cost info for the popular coding-agent CLIs without ever shipping a native
+executable. It's a plain JS program — no Rust, no platform binaries, nothing for antivirus to
+choke on — so it installs and runs anywhere Node/Bun does.
+
+To keep things simple and maintainable, this fork supports only the three most popular tools:
+**Claude Code, Codex, and Gemini CLI**.
+
 ## Supported Sources
 
 ccusage reads local usage data from coding agent CLIs and turns it into daily, weekly, monthly, and session reports.
 
-| Source             | Focused command example  |
-| ------------------ | ------------------------ |
-| Claude Code        | `ccusage claude daily`   |
-| Codex              | `ccusage codex daily`    |
-| OpenCode           | `ccusage opencode daily` |
-| Amp                | `ccusage amp daily`      |
-| Droid              | `ccusage droid daily`    |
-| Codebuff           | `ccusage codebuff daily` |
-| Hermes Agent       | `ccusage hermes daily`   |
-| pi-agent           | `ccusage pi daily`       |
-| Goose              | `ccusage goose daily`    |
-| OpenClaw           | `ccusage openclaw daily` |
-| Kilo               | `ccusage kilo daily`     |
-| Kimi               | `ccusage kimi daily`     |
-| Qwen               | `ccusage qwen daily`     |
-| GitHub Copilot CLI | `ccusage copilot daily`  |
-| Gemini CLI         | `ccusage gemini daily`   |
+| Source      | Focused command example |
+| ----------- | ----------------------- |
+| Claude Code | `ccusage claude daily`  |
+| Codex       | `ccusage codex daily`   |
+| Gemini CLI  | `ccusage gemini daily`  |
 
-Use `ccusage daily`, `ccusage weekly`, `ccusage monthly`, or `ccusage session` to include every detected source in one report.
+Use `ccusage daily`, `ccusage weekly`, `ccusage monthly`, or `ccusage session` for Claude Code reports.
 
 ## Installation
 
@@ -57,16 +60,10 @@ You can run ccusage directly without a global installation:
 # Recommended
 bunx ccusage
 
-# Nix
-nix run github:ryoppippi/ccusage -- daily
-
 # Alternative package runners
 pnpm dlx ccusage
 pnpx ccusage
 npx ccusage@latest
-
-# PR preview builds
-bunx -p https://pkg.pr.new/ryoppippi/ccusage@<pr-number> ccusage --offline
 ```
 
 > [bunx](https://bun.com/docs/pm/bunx) caches the downloaded package, so repeated runs are faster after the first launch.
@@ -75,34 +72,18 @@ bunx -p https://pkg.pr.new/ryoppippi/ccusage@<pr-number> ccusage --offline
 
 ```bash
 # Basic usage
-bunx ccusage          # Show all detected sources by day (default)
-bunx ccusage daily    # All detected sources by day
-bunx ccusage weekly   # All detected sources by week
-bunx ccusage monthly  # All detected sources by month
-bunx ccusage session  # All detected sources by session
+bunx ccusage          # Claude Code usage by day (default)
+bunx ccusage daily    # Claude Code by day
+bunx ccusage weekly   # Claude Code by week
+bunx ccusage monthly  # Claude Code by month
+bunx ccusage session  # Claude Code by session
 bunx ccusage blocks   # Claude Code 5-hour billing windows
 bunx ccusage statusline  # Claude Code status line for hooks (Beta)
 
 # Source-focused reports and options
 bunx ccusage claude daily --mode display
 bunx ccusage codex daily --speed fast
-bunx ccusage opencode weekly
-bunx ccusage amp session
-bunx ccusage droid daily
-bunx ccusage codebuff daily
-bunx ccusage hermes daily
-bunx ccusage goose daily
-bunx ccusage openclaw daily
-bunx ccusage kilo daily
-bunx ccusage kimi daily
-bunx ccusage qwen daily
-bunx ccusage copilot daily
 bunx ccusage gemini daily
-bunx ccusage pi daily --pi-path /path/to/sessions
-bunx ccusage pi daily --pi-path /path/to/sessions,/archive/pi/sessions
-
-# Explicit unified report
-bunx ccusage daily --all
 
 # Filters and options
 bunx ccusage daily --since 2026-04-25 --until 2026-05-16
@@ -125,7 +106,7 @@ bunx ccusage monthly --compact  # Compact monthly report
 - 📊 **Daily Report**: View token usage and costs aggregated by date
 - 📅 **Monthly Report**: View token usage and costs aggregated by month
 - 💬 **Session Report**: View usage grouped by conversation sessions
-- 🤖 **Unified CLI Reports**: View Claude Code, Codex, OpenCode, Amp, Droid, Codebuff, Hermes Agent, pi-agent, Goose, OpenClaw, Kilo, Kimi, Qwen, GitHub Copilot CLI, and Gemini CLI usage from one CLI
+- 🤖 **Multi-CLI Reports**: View Claude Code, Codex, and Gemini CLI usage from one CLI
 - ⏰ **5-Hour Blocks Report**: Track usage within Claude's billing windows with active block monitoring
 - 🚀 **Statusline Integration**: Compact usage display for Claude Code status bar hooks (Beta)
 - 🤖 **Model Tracking**: See which models are used across supported sources
@@ -155,46 +136,39 @@ Full documentation is available at **[ccusage.com](https://ccusage.com/)**
 <details>
 <summary>Contributor setup</summary>
 
-Contributor setup uses the Nix flake development environment with [nix-direnv](https://github.com/nix-community/nix-direnv) for pinned tools, and `just` for everyday development tasks. Install [Nix](https://nixos.org/) with the `nix-command` and `flakes` experimental features enabled, then let nix-direnv load the dev shell automatically when you enter the directory:
+This is a **Bun-only TypeScript project** — there is no Rust toolchain, no native binary, and no
+Nix. All you need is [Bun](https://bun.com/).
 
 ```sh
 # Clone the repository
 git clone https://github.com/ryoppippi/ccusage.git
 cd ccusage
 
-# Allow direnv to load the Nix dev shell
-direnv allow
+# Install dependencies
+bun install
 ```
 
-The dev shell provides the pinned `pnpm`, Rust toolchain, GitHub CLI, git hooks, generated local agent skills, and project utilities from `flake.nix`. It also installs package dependencies from `pnpm-lock.yaml` when needed.
-
-Run project tasks with `just` from inside the Nix environment (`just --list` shows every recipe):
+Common tasks (run from the repo root):
 
 ```sh
-just fmt
-just test
-just check
+bun run tsc --noEmit   # Typecheck
+bun test               # Unit tests (bun:test)
+bun run build          # Build dist/main.js with tsdown
+bun run start daily    # Run the CLI from source
 ```
 
-### Nix Package
+`just` recipes are also available (`just --list` shows every recipe) and wrap the same Bun commands.
 
-The flake exposes `ccusage` as the default package and app:
+### Pricing snapshot
 
-```sh
-nix run github:ryoppippi/ccusage
-nix run github:ryoppippi/ccusage -- codex daily --offline
-nix build github:ryoppippi/ccusage
-```
-
-Nix builds embed the LiteLLM pricing file from the locked `litellm` flake input, so sandboxed builds do not fetch pricing at build time. To update the locked pricing snapshot:
-
-Non-Nix Cargo builds read the same locked LiteLLM revision from `flake.lock` and fetch the pricing file from that revision at build time.
+Pricing data is embedded at build time from the [LiteLLM](https://github.com/BerriAI/litellm)
+model-cost JSON. To refresh the embedded snapshot:
 
 ```bash
-just update-litellm-pricing
+bun run embed:pricing
 ```
 
-The scheduled `update pricing` workflow runs the same update and validation, then opens a PR when the pricing snapshot changes.
+The scheduled `update pricing` workflow runs the same update and opens a PR when the snapshot changes.
 
 </details>
 

@@ -5,13 +5,11 @@
 default:
     @just --list
 
-# Build the package: config schema, bundle, then the native binary glue.
-# Delegated to the pnpm script because npm `prepack` and `pkg-pr-new publish`
-# invoke `pnpm run build` by name (and tsdown lives in this package's
-# node_modules), so the script must stay the single source of truth.
+# Build the package bundle with tsdown. Delegated to the package script because
+# npm `prepack` and `pkg-pr-new publish` invoke `bun run build` by name.
 build:
-    pnpm run build
+    bun run build
 
-# Type-check the package (tsgo comes from the Nix dev shell, so call it directly)
+# Type-check the package
 typecheck:
-    tsgo --noEmit
+    bun run tsc --noEmit

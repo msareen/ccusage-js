@@ -1,0 +1,1 @@
+{"sessionId":"session-b","timestamp":"2026-05-19T10:00:00.000Z","stats":{"models":{"gemini-3-pro":{"tokens":{"input":5000,"output":1200,"cached":500,"thoughts":300}}}}}
